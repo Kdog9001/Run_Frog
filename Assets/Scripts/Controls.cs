@@ -16,7 +16,7 @@ public class Controls : MonoBehaviour
     {
         
         Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        transform.position += Movement * speed * Time.deltaTime;\
+        transform.position += Movement * speed * Time.deltaTime;
         //starting rotation
         if (transform.position.x > -4 && transform.position.x <5)
         {
