@@ -27,5 +27,9 @@ public class platformMove : MonoBehaviour
         }
         Destroy(gameObject);
     }
+    public void setSpeed(float newSpeed)
+    {
+        newSpeed = speed;
+    }
 
 }
