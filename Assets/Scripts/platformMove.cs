@@ -29,7 +29,7 @@ public class platformMove : MonoBehaviour
     }
     public void setSpeed(float newSpeed)
     {
-        newSpeed = speed;
+        speed = newSpeed;
     }
 
 }
