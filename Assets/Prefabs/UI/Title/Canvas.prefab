@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 6030352243191925706}
   - component: {fileID: 8389390974010549360}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -391,7 +391,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: OnClick
+        m_MethodName: restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1208,7 +1208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6424596730040817540}
         m_TargetAssemblyTypeName: UserSettings, Assembly-CSharp
-        m_MethodName: Pause
+        m_MethodName: SetGameVol
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1348,7 +1348,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6424596730040817540}
         m_TargetAssemblyTypeName: UserSettings, Assembly-CSharp
-        m_MethodName: Pause1
+        m_MethodName: SetMusicVol
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2076,3 +2076,4 @@ MonoBehaviour:
   myMixer: {fileID: 24100000, guid: c85e6a101516e6d44a0bcdfca4e49b26, type: 2}
   musicSlider: {fileID: 452675645245916427}
   gameSlider: {fileID: 5173255659500818114}
+  isTitle: 0
