@@ -199,6 +199,7 @@ public class platformManager : MonoBehaviour
                 StartCoroutine(spawnPlatform(spawnPoints[23], a8));
             
         }
+        
 
     /*
     5.92 1.204 0 
