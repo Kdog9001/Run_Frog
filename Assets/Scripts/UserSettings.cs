@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UserSettings : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class UserSettings : MonoBehaviour
 
     public void Pause1()
     {
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
         gameObject.transform.GetChild(3).gameObject.SetActive(true);
         gameObject.transform.GetChild(4).gameObject.SetActive(true);
         gameObject.transform.GetChild(5).gameObject.SetActive(true);
@@ -49,6 +51,7 @@ public class UserSettings : MonoBehaviour
     }
     public void Unpause()
     {
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
         gameObject.transform.GetChild(3).gameObject.SetActive(false);
         gameObject.transform.GetChild(4).gameObject.SetActive(false);
         gameObject.transform.GetChild(2).gameObject.SetActive(true);
@@ -79,5 +82,13 @@ public class UserSettings : MonoBehaviour
     {
         gameSlider.value = PlayerPrefs.GetFloat("gameVolume");
         SetGameVol();
+    }
+    public void died()
+    {
+        Invoke("re", 2.0f);
+    }
+    private void re()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
