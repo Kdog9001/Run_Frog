@@ -10,13 +10,16 @@ public class Controls : MonoBehaviour
     public bool jumping = false;
     public int multi = 1;
     [SerializeField]
-    public int index = 1;
+    private int index = 1;
     [SerializeField]
     private int nextPos,curPos;
     [SerializeField]
     private float grav,gravCooldown,jumpGrav,startDelay;
+    [SerializeField]
+    private float jumpTime;
     private bool gravS, start;
     private GameObject me;
+    private float setJumpAmount;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,7 @@ public class Controls : MonoBehaviour
         gravS = false;
         start = true;
         StartCoroutine(Death2());
+        setJumpAmount = jumpAmount;
     }
 
     // Update is called once per frame
@@ -75,44 +79,39 @@ public class Controls : MonoBehaviour
 
             }
         }
-        //Vector3 Movement = new Vector3(multi*Input.GetAxis("Horizontal"), 0, 0);
-        //transform.position += Movement * speed * Time.deltaTime;
-        //starting rotation
-        if (transform.position.y > 15.1)
-        {
-            //Movement = Vector3(-Input.GetAxis("Horizontal"), 0, 0);
-            multi = -1;
-        } else
-            //Movement = Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        multi = 1;
-        /*if (transform.position.x > 10 && Input.GetKey(KeyCode.A))//rightwall
-        {
-            rb.velocity = transform.up * speed;
-        }
-        if (transform.position.x > 10 && Input.GetKey(KeyCode.D))//rightwall
-        {
-            rb.velocity = -transform.up * speed;
-        }
-        if (transform.position.x < 10 && Input.GetKey(KeyCode.D))//leftwall
-        {
-            rb.velocity = transform.up * speed;
-        }
-        if (transform.position.x < 10 && Input.GetKey(KeyCode.A))//leftwall
-        {
-            rb.velocity = -transform.up * speed;
-        }*/
-
-
-
         jump();
+    }
+    private void FixedUpdate()
+    {
+        if (jumping)
+        {
+
+
+            Vector3 tmepV = Vector3.up;
+            switch (curPos)
+            {
+                case 1: tmepV = Vector3.up; break;
+                case 2: tmepV = new Vector3(-0.5f, 0.5f, 0); break;
+                case 3: tmepV = Vector3.left; break;
+                case 4: tmepV = new Vector3(-0.5f, -0.5f, 0); break;
+                case 5: tmepV = Vector3.down; break;
+                case 6: tmepV = new Vector3(0.5f, -0.5f, 0); break;
+                case 7: tmepV = Vector3.right; break;
+                case 8: tmepV = new Vector3(0.5f, 0.5f, 0); break;
+            }
+                transform.position += tmepV * jumpAmount * Time.deltaTime;
+                jumpAmount = jumpAmount - ((jumpGrav * jumpGrav) * Time.deltaTime);
+                // delta v/ delta t jumpGrav
+        }
     }
 
     void jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && jumping==false)
         {
-            StartCoroutine(SingleJumpUp());
-            
+            jumping = true;
+
+
         }
         if (jumping)
         {
@@ -150,36 +149,68 @@ public class Controls : MonoBehaviour
         }
 
         float eTime = 0;
-        while (eTime < 0.6f)
+        while (jumping)
         {
-            transform.position += tmepV * jumpAmount * Time.deltaTime* (0.8f-eTime/2.0f);
+            transform.position += tmepV *jumpAmount *Time.deltaTime;
+            jumpAmount = jumpAmount - ((jumpGrav * jumpGrav) * Time.deltaTime);
+            // delta v/ delta t jumpGrav
             eTime += Time.deltaTime;
-            yield return null;
-        } 
-        yield return new WaitForSeconds(2.0f);
-        jumping = false;
+        }
+        yield return null;
+        //sets jumping to false
     }
 
-    IEnumerator SingleJumpRight()
-    {
-        jumping = true;
-        rb.AddForce(Vector3.right * jumpAmount, ForceMode.Impulse);
-        yield return new WaitForSeconds(2.0f);
-        jumping = false;
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "gravM")
         {
-            nextPos = other.GetComponent<Grav2>().pos;
-            updatedGrav();
+            if (jumping)
+            {
+                //check for hor input
+                nextPos = other.GetComponent<Grav2>().pos;
+                if(nextPos > curPos && Input.GetAxis("Horizontal") > 0)
+                {
+                    updatedGrav();
+                }
+                else if (curPos==8&& nextPos == 1&&Input.GetAxis("Horizontal") > 0)
+                {
+                    updatedGrav();
+                }
+                else if (nextPos< curPos && Input.GetAxis("Horizontal") < 0)
+                {
+                    updatedGrav();
+                }
+                else if (curPos==1 && nextPos==8 && Input.GetAxis("Horizontal") < 0)
+                {
+                    updatedGrav();
+                }
+            }
+            else
+            {
+                nextPos = other.GetComponent<Grav2>().pos;
+                updatedGrav();
+            }
         }
         if (other.gameObject.tag == "death")
         {
             //death
             GameObject.Find("Canvas").GetComponent<UserSettings>().died();
-            GameObject.Find("MainCamera").GetComponent<CameraController>().updatePlayerState();
+            GameObject.Find("Main Camera").GetComponent<CameraController>().updatePlayerState();
             Destroy(me);
+        }
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Log")
+        {
+            Debug.Log("lll");
+            if (jumping == true)
+            {
+                jumpAmount = setJumpAmount;
+                jumping = false;
+                Debug.Log("666");
+            }
         }
 
     }
