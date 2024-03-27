@@ -178,6 +178,7 @@ public class Controls : MonoBehaviour
         {
             //death
             GameObject.Find("Canvas").GetComponent<UserSettings>().died();
+            GameObject.Find("MainCamera").GetComponent<CameraController>().updatePlayerState();
             Destroy(me);
         }
 
