@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class platformMove : MonoBehaviour
 {
-    public float speed, totalTime;
-
+    private float totalTime=1;
+    private float speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +30,10 @@ public class platformMove : MonoBehaviour
     public void setSpeed(float newSpeed)
     {
         speed = newSpeed;
+    }
+    public void setTime(float newtime)
+    {
+        totalTime = newtime;
     }
 
 }

@@ -5,9 +5,11 @@ using UnityEngine;
 public class platformManager : MonoBehaviour
 {
     [SerializeField]
+    private int chance;
+    [SerializeField]
     private Vector3[] spawnPoints;
     [SerializeField]
-    private float StartSpeed, StartDelay, intervalTime;
+    private float StartSpeed, StartDelay, intervalTime,platTime,difSpeeedIncreaase;
     [SerializeField]
     private GameObject platform;
     private Vector3 a1 = new Vector3 (0,0,0), a2 = new Vector3(0, 0, 45), a3 = new Vector3(0, 0, 90), a4 = new Vector3(0, 0, 135), a5 = new Vector3(0, 0, 180), a6 = new Vector3(0, 0, 225), a7 = new Vector3(0, 0, 270), a8 = new Vector3(0, 0, 315);
@@ -23,7 +25,8 @@ public class platformManager : MonoBehaviour
         StartCoroutine(protect());
 
     }
-    private IEnumerator protect()//Death timer
+    private IEnumerator protect()//keep solid platforms untill start time has elasped 
+        //not ALL INVOKES NEED to start after the CancelInvoke
     {
         float eTime = 0;
         while (eTime < StartDelay)
@@ -32,17 +35,20 @@ public class platformManager : MonoBehaviour
             yield return null;
         }
         CancelInvoke();
-        InvokeRepeating("spawn", 0f, intervalTime);
+        StartCoroutine("DoCheck");
+        InvokeRepeating("increaseDiff", StartDelay, StartDelay);
     }
     private IEnumerator spawnPlatform(Vector3 point,Vector3 angle)
     {
         GameObject plat = Instantiate(platform, point, Quaternion.Euler(angle));
         plat.GetComponent<platformMove>().setSpeed(StartSpeed);
+        plat.GetComponent<platformMove>().setTime(platTime);
         yield return null;
     }
+    
     private int Rando()
     {
-       int k= Random.Range(1, 4);
+       int k= Random.Range(1, chance);
         return k;
     }
     private void spawn()//spawn platform with a chance of not
@@ -144,7 +150,7 @@ public class platformManager : MonoBehaviour
             StartCoroutine(spawnPlatform(spawnPoints[23], a8));
         }
     }
-        private void spawnProtect()//spawn platform 
+        private void spawnProtect()//spawn platform/ intro 
         {
            
                 StartCoroutine(spawnPlatform(spawnPoints[0], a1));
@@ -199,7 +205,22 @@ public class platformManager : MonoBehaviour
                 StartCoroutine(spawnPlatform(spawnPoints[23], a8));
             
         }
-        
+    IEnumerator DoCheck()
+    {
+        for (; ; )
+        {
+            // execute block of code here
+            spawn();
+            yield return new WaitForSeconds(intervalTime);
+        }
+    }
+    private void increaseDiff()//test might just look into speeding game up
+    {
+         StartSpeed -= difSpeeedIncreaase;
+        float temp = StartSpeed / -3.0f;
+        intervalTime= 1.0f / temp;
+    }
+
 
     /*
     5.92 1.204 0 
