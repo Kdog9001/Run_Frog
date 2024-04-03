@@ -26,6 +26,7 @@ public class Controls : MonoBehaviour
         curPos = 1;
         StartCoroutine(startTimer());
         setJumpAmount = jumpAmount;
+        soundMe = me.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
