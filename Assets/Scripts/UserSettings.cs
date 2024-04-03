@@ -16,6 +16,7 @@ public class UserSettings : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider gameSlider;
     [SerializeField] private bool isTitle;
+    private float curTimeScale;
     private void Start()
     {
         if (PlayerPrefs.HasKey("musicVolume"))
@@ -34,10 +35,9 @@ public class UserSettings : MonoBehaviour
         {
             SetGameVol();
         }
-        Unpause();
     }
 
-    public void Pause1()
+    public void Pause1()//toggle Ui Elements
     {
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
         gameObject.transform.GetChild(3).gameObject.SetActive(true);
@@ -48,8 +48,11 @@ public class UserSettings : MonoBehaviour
         {
             gameObject.transform.GetChild(1).gameObject.SetActive(true);
         }
+        curTimeScale = Time.timeScale;//get cur Timescale
+        Time.timeScale = 0f;//pause game
+
     }
-    public void Unpause()
+    public void Unpause()//toggle Ui Elements
     {
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         gameObject.transform.GetChild(3).gameObject.SetActive(false);
@@ -60,6 +63,7 @@ public class UserSettings : MonoBehaviour
         {
             gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
+        Time.timeScale = curTimeScale;//resume
     }
     public void SetMusicVol()
     {
@@ -83,11 +87,17 @@ public class UserSettings : MonoBehaviour
         gameSlider.value = PlayerPrefs.GetFloat("gameVolume");
         SetGameVol();
     }
+
     public void died()
     {
         Invoke("re", 2.0f);
     }
-    private void re()
+    public void restart()
+    {
+        Time.timeScale = 1.0f;
+        re();
+    }
+    private void re()//RestartScene
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

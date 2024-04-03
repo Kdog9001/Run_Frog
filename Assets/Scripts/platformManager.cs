@@ -27,6 +27,7 @@ public class platformManager : MonoBehaviour
     }
     public void restart()
     {
+        CancelInvoke();
         InvokeRepeating("spawnProtect", 0f, intervalTime);
         StartCoroutine(protect());
         resetTime();

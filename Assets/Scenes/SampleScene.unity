@@ -1388,18 +1388,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  rb: {fileID: 889181737}
   jumpAmount: 16
-  jumping: 0
-  multi: 1
-  index: 1
-  nextPos: 0
-  curPos: 1
   grav: -0.5
   gravCooldown: 0.5
   jumpGrav: 4.5
   startDelay: 5.5
-  jumpTime: 0
 --- !u!54 &889181737
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2275,6 +2268,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6092825649481216562, guid: 7272143f5202f5c4e85c348eee697c05,
         type: 3}
+      propertyPath: chance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6092825649481216562, guid: 7272143f5202f5c4e85c348eee697c05,
+        type: 3}
+      propertyPath: platTime
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6092825649481216562, guid: 7272143f5202f5c4e85c348eee697c05,
+        type: 3}
       propertyPath: platform
       value: 
       objectReference: {fileID: 8770082431694861501, guid: 51de7a8df0ca5574ea4772bc0e1f8bd5,
@@ -2283,6 +2286,11 @@ PrefabInstance:
         type: 3}
       propertyPath: StartSpeed
       value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6092825649481216562, guid: 7272143f5202f5c4e85c348eee697c05,
+        type: 3}
+      propertyPath: difSpeeedIncreaase
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6092825649481216562, guid: 7272143f5202f5c4e85c348eee697c05,
         type: 3}
