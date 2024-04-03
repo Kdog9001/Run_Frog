@@ -25,6 +25,13 @@ public class platformManager : MonoBehaviour
         StartCoroutine(protect());
 
     }
+    public void restart()
+    {
+        InvokeRepeating("spawnProtect", 0f, intervalTime);
+        StartCoroutine(protect());
+        resetTime();
+
+    }
     private IEnumerator protect()//keep solid platforms untill start time has elasped 
         //not ALL INVOKES NEED to start after the CancelInvoke
     {
@@ -216,9 +223,14 @@ public class platformManager : MonoBehaviour
     }
     private void increaseDiff()//test might just look into speeding game up
     {
-         StartSpeed -= difSpeeedIncreaase;
-        float temp = StartSpeed / -3.0f;
-        intervalTime= 1.0f / temp;
+        //StartSpeed -= difSpeeedIncreaase;
+        //float temp = StartSpeed / -3.0f;
+        //intervalTime= 1.0f / temp;
+        Time.timeScale = Time.timeScale+difSpeeedIncreaase;
+    }
+    private void resetTime()
+    {
+        Time.timeScale = 1.0f;
     }
 
 
