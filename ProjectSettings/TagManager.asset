@@ -6,6 +6,9 @@ TagManager:
   tags:
   - gravM
   - death
+  - Log
+  - LI
+  - RI
   layers:
   - Default
   - TransparentFX
