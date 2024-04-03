@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Controls : MonoBehaviour
 {
@@ -8,9 +9,14 @@ public class Controls : MonoBehaviour
     private bool jumping = false, gravS, start;
     private int nextPos,curPos;
     [SerializeField]
-    private float grav,gravCooldown,jumpGrav,startDelay;
+    private float grav,gravCooldown,jumpGrav,startDelay,deathDelayT;
     private GameObject me;
     private float setJumpAmount;
+    private AudioSource soundMe;
+    [SerializeField]
+    private AudioClip splash, jumpSound;
+
+
 
     void Start()
     {
@@ -63,6 +69,24 @@ public class Controls : MonoBehaviour
         }
         jump();
     }
+    public void horInput()
+    {
+
+    }
+    public void jumpInput()
+    {
+
+    }
+    private void soundDeath()
+    {
+        soundMe.clip = splash;
+        soundMe.Play();
+    }
+    private void soundJump()
+    {
+        soundMe.clip = jumpSound;
+        soundMe.Play();
+    }
     private void FixedUpdate()
     {
         if (jumping)//find the angle and applie jump force and jump grav to the angle
@@ -91,6 +115,7 @@ public class Controls : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && jumping==false)
         {
             jumping = true;
+            soundJump();
         }
     }
 
@@ -127,12 +152,17 @@ public class Controls : MonoBehaviour
         if (other.gameObject.tag == "death")//look for kill boxes
         {
             //death
-            GameObject.Find("Canvas").GetComponent<UserSettings>().died();
-            GameObject.Find("Main Camera").GetComponent<CameraController>().updatePlayerState();
-            GameObject.Find("PlatformSpawnManager").GetComponent<platformManager>().restart();
-            Destroy(me);
+            soundDeath();
+            Invoke("deathDelay", deathDelayT);
         }
 
+    }
+    private void deathDelay()
+    {
+        GameObject.Find("Canvas").GetComponent<UserSettings>().died();
+        GameObject.Find("Main Camera").GetComponent<CameraController>().updatePlayerState();
+        GameObject.Find("PlatformSpawnManager").GetComponent<platformManager>().restart();
+        Destroy(me);
     }
     private void OnCollisionEnter(Collision collision)
     {
