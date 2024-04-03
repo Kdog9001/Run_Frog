@@ -11,7 +11,8 @@ public class Controls : MonoBehaviour
     [SerializeField]
     private float grav,gravCooldown,jumpGrav,startDelay,deathDelayT;
     private GameObject me;
-    private float setJumpAmount;
+    private float setJumpAmount,pHorInput;
+    private bool pJumpInput;
     private AudioSource soundMe;
     [SerializeField]
     private AudioClip splash, jumpSound;
@@ -39,44 +40,66 @@ public class Controls : MonoBehaviour
                            //counting up by one going right ending with 8 on theleft of the floor
             {
                 case 1:
-                    Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), grav, 0);//apply the angle to the player input and gravity
+                    Vector3 Movement = new Vector3(horInput(), grav, 0);//apply the angle to the player input and gravity
                     transform.position += Movement * speed * Time.deltaTime;
                     break;
                 case 2:
-                    Vector3 Movement2 = new Vector3((Input.GetAxis("Horizontal") / 2.0f) - grav / 2.0f, (Input.GetAxis("Horizontal") / 2.0f) + grav / 2.0f, 0);
+                    Vector3 Movement2 = new Vector3((horInput() / 2.0f) - grav / 2.0f, (horInput() / 2.0f) + grav / 2.0f, 0);
                     transform.position += Movement2 * speed * Time.deltaTime;
                     break;
                 case 3:
-                    Vector3 Movement3 = new Vector3(-grav, (Input.GetAxis("Horizontal")), 0);
+                    Vector3 Movement3 = new Vector3(-grav, (horInput()), 0);
                     transform.position += Movement3 * speed * Time.deltaTime; break;
                 case 4:
-                    Vector3 Movement4 = new Vector3(-(Input.GetAxis("Horizontal") / 2.0f) - grav / 2.0f, (Input.GetAxis("Horizontal") / 2.0f) - grav / 2.0f, 0);
+                    Vector3 Movement4 = new Vector3(-(horInput() / 2.0f) - grav / 2.0f, (horInput() / 2.0f) - grav / 2.0f, 0);
                     transform.position += Movement4 * speed * Time.deltaTime;
                     break;
                 case 5:
-                    Vector3 Movement5 = new Vector3(-Input.GetAxis("Horizontal"), -grav, 0);
+                    Vector3 Movement5 = new Vector3(-horInput(), -grav, 0);
                     transform.position += Movement5 * speed * Time.deltaTime; break;
                 case 6:
-                    Vector3 Movement6 = new Vector3(-(Input.GetAxis("Horizontal") / 2.0f) + grav / 2.0f, -(Input.GetAxis("Horizontal") / 2.0f) - grav / 2.0f, 0);
+                    Vector3 Movement6 = new Vector3(-(horInput() / 2.0f) + grav / 2.0f, -(horInput() / 2.0f) - grav / 2.0f, 0);
                     transform.position += Movement6 * speed * Time.deltaTime; break;
                 case 7:
-                    Vector3 Movement7 = new Vector3(grav, -(Input.GetAxis("Horizontal")), 0);
+                    Vector3 Movement7 = new Vector3(grav, -(horInput()), 0);
                     transform.position += Movement7 * speed * Time.deltaTime; break;
                 case 8:
-                    Vector3 Movement8 = new Vector3((Input.GetAxis("Horizontal") / 2.0f) + grav / 2.0f, -(Input.GetAxis("Horizontal") / 2.0f) + grav / 2.0f, 0);
+                    Vector3 Movement8 = new Vector3((horInput() / 2.0f) + grav / 2.0f, -(horInput() / 2.0f) + grav / 2.0f, 0);
                     transform.position += Movement8 * speed * Time.deltaTime; break;
 
             }
         }
         jump();
     }
-    public void horInput()
+    public void setPHorInput(float horI)//read horizontal phone input
     {
-
+        pHorInput = horI;
     }
-    public void jumpInput()
+    public void setPJumpInput(bool jumpI)//read jump phone input
     {
-
+        pJumpInput = jumpI;
+    }
+    private float horInput()
+    {
+        if (pHorInput != 0)
+        {
+            return pHorInput;
+        }
+        else
+        {
+            return Input.GetAxis("Horizontal");
+        }
+    }
+    private bool jumpInput()
+    {
+        if (pJumpInput)
+        {
+            return pJumpInput;
+        }
+        else
+        {
+            return Input.GetKeyDown(KeyCode.Space);
+        }
     }
     private void soundDeath()
     {
@@ -131,15 +154,15 @@ public class Controls : MonoBehaviour
                 //check for hor input
                 //check for the correct directional input to match with change
                 nextPos = other.GetComponent<Grav2>().pos;
-                if (curPos == 8 && nextPos == 1 && Input.GetAxis("Horizontal") > 0.0f)
+                if (curPos == 8 && nextPos == 1 && horInput() > 0.0f)
                 {
                     updatedGrav();
                 }
-                else if(nextPos > curPos && Input.GetAxis("Horizontal") > 0.0f)
+                else if(nextPos > curPos && horInput() > 0.0f)
                 {
                     updatedGrav();
                 }
-                else if (nextPos== curPos && Input.GetAxis("Horizontal") < 0.0f)
+                else if (nextPos== curPos && horInput() < 0.0f)
                 {
                     updatedGrav();
                 }
