@@ -33,42 +33,6 @@ public class Controls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!start)
-        {
-
-            switch (curPos)//each case repreasents a side 1 being the base floor and
-                           //counting up by one going right ending with 8 on theleft of the floor
-            {
-                case 1:
-                    Vector3 Movement = new Vector3(horInput(), grav, 0);//apply the angle to the player input and gravity
-                    transform.position += Movement * speed * Time.deltaTime;
-                    break;
-                case 2:
-                    Vector3 Movement2 = new Vector3((horInput() / 2.0f) - grav / 2.0f, (horInput() / 2.0f) + grav / 2.0f, 0);
-                    transform.position += Movement2 * speed * Time.deltaTime;
-                    break;
-                case 3:
-                    Vector3 Movement3 = new Vector3(-grav, (horInput()), 0);
-                    transform.position += Movement3 * speed * Time.deltaTime; break;
-                case 4:
-                    Vector3 Movement4 = new Vector3(-(horInput() / 2.0f) - grav / 2.0f, (horInput() / 2.0f) - grav / 2.0f, 0);
-                    transform.position += Movement4 * speed * Time.deltaTime;
-                    break;
-                case 5:
-                    Vector3 Movement5 = new Vector3(-horInput(), -grav, 0);
-                    transform.position += Movement5 * speed * Time.deltaTime; break;
-                case 6:
-                    Vector3 Movement6 = new Vector3(-(horInput() / 2.0f) + grav / 2.0f, -(horInput() / 2.0f) - grav / 2.0f, 0);
-                    transform.position += Movement6 * speed * Time.deltaTime; break;
-                case 7:
-                    Vector3 Movement7 = new Vector3(grav, -(horInput()), 0);
-                    transform.position += Movement7 * speed * Time.deltaTime; break;
-                case 8:
-                    Vector3 Movement8 = new Vector3((horInput() / 2.0f) + grav / 2.0f, -(horInput() / 2.0f) + grav / 2.0f, 0);
-                    transform.position += Movement8 * speed * Time.deltaTime; break;
-
-            }
-        }
         jump();
     }
     public void setPHorInput(float horI)//read horizontal phone input
@@ -113,6 +77,42 @@ public class Controls : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (!start)
+        {
+
+            switch (curPos)//each case repreasents a side 1 being the base floor and
+                           //counting up by one going right ending with 8 on theleft of the floor
+            {
+                case 1:
+                    Vector3 Movement = new Vector3(horInput(), grav, 0);//apply the angle to the player input and gravity
+                    transform.position += Movement * speed * Time.deltaTime;
+                    break;
+                case 2:
+                    Vector3 Movement2 = new Vector3((horInput() / 2.0f) - grav / 2.0f, (horInput() / 2.0f) + grav / 2.0f, 0);
+                    transform.position += Movement2 * speed * Time.deltaTime;
+                    break;
+                case 3:
+                    Vector3 Movement3 = new Vector3(-grav, (horInput()), 0);
+                    transform.position += Movement3 * speed * Time.deltaTime; break;
+                case 4:
+                    Vector3 Movement4 = new Vector3(-(horInput() / 2.0f) - grav / 2.0f, (horInput() / 2.0f) - grav / 2.0f, 0);
+                    transform.position += Movement4 * speed * Time.deltaTime;
+                    break;
+                case 5:
+                    Vector3 Movement5 = new Vector3(-horInput(), -grav, 0);
+                    transform.position += Movement5 * speed * Time.deltaTime; break;
+                case 6:
+                    Vector3 Movement6 = new Vector3(-(horInput() / 2.0f) + grav / 2.0f, -(horInput() / 2.0f) - grav / 2.0f, 0);
+                    transform.position += Movement6 * speed * Time.deltaTime; break;
+                case 7:
+                    Vector3 Movement7 = new Vector3(grav, -(horInput()), 0);
+                    transform.position += Movement7 * speed * Time.deltaTime; break;
+                case 8:
+                    Vector3 Movement8 = new Vector3((horInput() / 2.0f) + grav / 2.0f, -(horInput() / 2.0f) + grav / 2.0f, 0);
+                    transform.position += Movement8 * speed * Time.deltaTime; break;
+
+            }
+        }
         if (jumping)//find the angle and applie jump force and jump grav to the angle
         {
 
@@ -136,7 +136,7 @@ public class Controls : MonoBehaviour
 
     void jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && jumping==false)
+        if (jumpInput() && jumping==false)
         {
             jumping = true;
             soundJump();
@@ -177,6 +177,7 @@ public class Controls : MonoBehaviour
         {
             //death
             soundDeath();
+            GameObject.Find("Score").GetComponent<Score>().StopScore();
             Invoke("deathDelay", deathDelayT);
         }
 

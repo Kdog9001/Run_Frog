@@ -45,6 +45,7 @@ public class platformManager : MonoBehaviour
         CancelInvoke();
         StartCoroutine("DoCheck");
         InvokeRepeating("increaseDiff", StartDelay, StartDelay);
+        GameObject.Find("Score").GetComponent<Score>().StartScore();///start The game scoring
     }
     private IEnumerator spawnPlatform(Vector3 point,Vector3 angle)
     {
