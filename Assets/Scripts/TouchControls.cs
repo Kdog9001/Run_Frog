@@ -12,43 +12,72 @@ public class TouchControls : MonoBehaviour
 
     public int speed;
 
+    private Vector2 startTouchPosition;
+    private Vector2 endTouchPosition;
+    private bool playerAlive;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
+        playerAlive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount == 1)
+        if (playerAlive)
         {
-            if (movingLeft)
+
+
+            if (Input.touchCount == 1)
             {
-                player.GetComponent<Controls>().setPHorInput(-1.0f);
+                if (movingLeft)
+                {
+                    player.GetComponent<Controls>().setPHorInput(-1.0f);
+                }
+
+                if (movingRight)
+                {
+                    player.GetComponent<Controls>().setPHorInput(1.0f);
+                }
+            }
+            if (Input.touchCount == 0)
+            {
+                movingLeft = false;
+                movingRight = false;
+                player.GetComponent<Controls>().setPHorInput(0.0f);
             }
 
-            if (movingRight)
+            if (Input.touchCount == 2)
             {
-                player.GetComponent<Controls>().setPHorInput(1.0f);
+                player.GetComponent<Controls>().setPJumpInput(true);
+            }
+            else
+            {
+                player.GetComponent<Controls>().setPJumpInput(false);
+            }
+
+            //Gets first touch position
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                startTouchPosition = Input.GetTouch(0).position;
+            }
+            //Gets touch position after swipe
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                endTouchPosition = Input.GetTouch(0).position;
+
+                if (endTouchPosition.y > startTouchPosition.y)
+                {
+                    player.GetComponent<Controls>().setPJumpInput(true);
+                }
+                else
+                {
+                    player.GetComponent<Controls>().setPJumpInput(false);
+                }
             }
         }
-        if(Input.touchCount == 0)
-        {
-            movingLeft = false;
-            movingRight = false;
-            player.GetComponent<Controls>().setPHorInput(0.0f);
-        }
-
-        if (Input.touchCount == 2)
-        {
-            player.GetComponent<Controls>().setPJumpInput(true);
-        }
-        else
-        {
-            player.GetComponent<Controls>().setPJumpInput(false);
-        }
-        
     }
 
     private void OnMouseDown()
@@ -63,15 +92,9 @@ public class TouchControls : MonoBehaviour
             Debug.Log("Touching Right");
             movingRight = true;
         }
-        /*if(gameObject.tag == "CI")
-        {
-            Debug.Log("Touching Right");
-            player.GetComponent<Controls>().setPJumpInput(true);
-        }*/
     }
-
-    void Jump()
+    public void Dead()
     {
-        Debug.Log("Jump");
+        playerAlive = false;
     }
 }
