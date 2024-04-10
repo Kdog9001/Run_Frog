@@ -35,7 +35,7 @@ public class Score : MonoBehaviour
     {
         float temp = startTime*2.0f;
         temp = Mathf.Round(temp);
-        scoreText.text= temp.ToString();
+        scoreText.text= "Score: "+temp.ToString();
     }
     public void StopScore()
     {
