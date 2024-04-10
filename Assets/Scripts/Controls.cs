@@ -198,6 +198,8 @@ public class Controls : MonoBehaviour
         GameObject.Find("Canvas").GetComponent<UserSettings>().died();
         GameObject.Find("Main Camera").GetComponent<CameraController>().updatePlayerState();
         GameObject.Find("PlatformSpawnManager").GetComponent<platformManager>().restart();
+        GameObject.Find("LeftInput").GetComponent<TouchControls>().Dead();
+        GameObject.Find("RightInput").GetComponent<TouchControls>().Dead();
         Destroy(me);
     }
     private void OnCollisionEnter(Collision collision)
