@@ -170,7 +170,19 @@ public class Controls : MonoBehaviour
             else
             {
                 nextPos = other.GetComponent<Grav2>().pos;
-                updatedGrav();
+                //updatedGrav();
+                if (curPos == 8 && nextPos == 1 && horInput() > 0.0f)
+                {
+                    updatedGrav();
+                }
+                else if (nextPos > curPos && horInput() > 0.0f)
+                {
+                    updatedGrav();
+                }
+                else if (nextPos == curPos && horInput() < 0.0f)
+                {
+                    updatedGrav();
+                }
             }
         }
         if (other.gameObject.tag == "death")//look for kill boxes
