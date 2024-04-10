@@ -12,6 +12,9 @@ public class TouchControls : MonoBehaviour
 
     public int speed;
 
+    private Vector2 startTouchPosition;
+    private Vector2 endTouchPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +52,25 @@ public class TouchControls : MonoBehaviour
             player.GetComponent<Controls>().setPJumpInput(false);
         }
         
+        //Gets first touch position
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            startTouchPosition = Input.GetTouch(0).position;
+        }
+        //Gets touch position after swipe
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            endTouchPosition = Input.GetTouch(0).position;
+
+            if(endTouchPosition.y > startTouchPosition.y)
+            {
+                player.GetComponent<Controls>().setPJumpInput(true);
+            }
+            else
+            {
+                player.GetComponent<Controls>().setPJumpInput(false);
+            }
+        }
     }
 
     private void OnMouseDown()
@@ -63,15 +85,5 @@ public class TouchControls : MonoBehaviour
             Debug.Log("Touching Right");
             movingRight = true;
         }
-        /*if(gameObject.tag == "CI")
-        {
-            Debug.Log("Touching Right");
-            player.GetComponent<Controls>().setPJumpInput(true);
-        }*/
-    }
-
-    void Jump()
-    {
-        Debug.Log("Jump");
     }
 }
