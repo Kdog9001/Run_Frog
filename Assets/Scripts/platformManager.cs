@@ -9,9 +9,11 @@ public class platformManager : MonoBehaviour
     [SerializeField]
     private Vector3[] spawnPoints;
     [SerializeField]
-    private float StartSpeed, StartDelay, intervalTime,platTime,difSpeeedIncreaase;
+    private float StartSpeed, StartDelay, intervalTime, platTime, difSpeeedIncreaase;
     [SerializeField]
     private GameObject platform;
+    private int spCount,spSide;
+    private Vector3[] positionArray = { new Vector3(0, 0, 0), new Vector3(0, 0, 45), new Vector3(0, 0, 90), new Vector3(0, 0, 135), new Vector3(0, 0, 180), new Vector3(0, 0, 225), new Vector3(0, 0, 270), new Vector3(0, 0, 315) };
     private Vector3 a1 = new Vector3 (0,0,0), a2 = new Vector3(0, 0, 45), a3 = new Vector3(0, 0, 90), a4 = new Vector3(0, 0, 135), a5 = new Vector3(0, 0, 180), a6 = new Vector3(0, 0, 225), a7 = new Vector3(0, 0, 270), a8 = new Vector3(0, 0, 315);
 
     private void Start()
@@ -21,31 +23,19 @@ public class platformManager : MonoBehaviour
         // start with simple random
         // logic later(is jump possible
         // 
-        InvokeRepeating("spawnProtect", 0f, intervalTime);
-        StartCoroutine(protect());
+        //InvokeRepeating("spawnProtect", 0f, intervalTime);
+        ///StartCoroutine(protect());
+        //
+        platSetUp(new Vector3(0,0,0));
+        GameObject.Find("Score").GetComponent<Score>().StartScore();
+        InvokeRepeating("spawn",0.0f, intervalTime);
+        InvokeRepeating("increaseDiff", StartDelay, StartDelay);
 
     }
     public void restart()
     {
-        CancelInvoke();
-        InvokeRepeating("spawnProtect", 0f, intervalTime);
-        StartCoroutine(protect());
         resetTime();
 
-    }
-    private IEnumerator protect()//keep solid platforms untill start time has elasped 
-        //not ALL INVOKES NEED to start after the CancelInvoke
-    {
-        float eTime = 0;
-        while (eTime < StartDelay)
-        {
-            eTime += Time.deltaTime;
-            yield return null;
-        }
-        CancelInvoke();
-        StartCoroutine("DoCheck");
-        InvokeRepeating("increaseDiff", StartDelay, StartDelay);
-        GameObject.Find("Score").GetComponent<Score>().StartScore();///start The game scoring
     }
     private IEnumerator spawnPlatform(Vector3 point,Vector3 angle)
     {
@@ -62,165 +52,55 @@ public class platformManager : MonoBehaviour
     }
     private void spawn()//spawn platform with a chance of not
     {
-        if (Rando() != 3)
+        for (int i = 0; i < 8; i++)
         {
-            StartCoroutine(spawnPlatform(spawnPoints[0], a1));
+            spCount = 0;
+                
+                for (int u = 0; u < 3; u++)
+                {
+                switch (i)
+                {
+                    case 0: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[spCount], positionArray[i])); break;
+                    case 1: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[3+ spCount], positionArray[i])); break;
+                    case 2: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[6 + spCount], positionArray[i])); break;
+                    case 3: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[9 + spCount], positionArray[i])); break;
+                    case 4: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[12 + spCount], positionArray[i])); break;
+                    case 5: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[15 + spCount], positionArray[i])); break;
+                    case 6: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[18 + spCount], positionArray[i])); break;
+                    case 7: if (Rando() != 3) StartCoroutine(spawnPlatform(spawnPoints[21 + spCount], positionArray[i])); break;
+                }
+                spCount++;
+            }
+
         }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[1], a1));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[2], a1));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[3], a2));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[4], a2));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[5], a2));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[6], a3));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[7], a3));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[8], a3));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[9], a4));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[10], a4));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[11], a4));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[12], a5));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[13], a5));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[14], a5));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[15], a6));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[16], a6));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[17], a6));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[18], a7));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[19], a7));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[20], a7));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[21], a8));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[22], a8));
-        }
-        if (Rando() != 3)
-        {
-            StartCoroutine(spawnPlatform(spawnPoints[23], a8));
-        }
+        
     }
-        private void spawnProtect()//spawn platform/ intro 
-        {
-           
-                StartCoroutine(spawnPlatform(spawnPoints[0], a1));
-            
-            
-                StartCoroutine(spawnPlatform(spawnPoints[1], a1));
-           
-                StartCoroutine(spawnPlatform(spawnPoints[2], a1));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[3], a2));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[4], a2));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[5], a2));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[6], a3));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[7], a3));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[8], a3));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[9], a4));
-           
-                StartCoroutine(spawnPlatform(spawnPoints[10], a4));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[11], a4));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[12], a5));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[13], a5));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[14], a5));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[15], a6));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[16], a6));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[17], a6));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[18], a7));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[19], a7));
-           
-                StartCoroutine(spawnPlatform(spawnPoints[20], a7));
-            
-            
-                StartCoroutine(spawnPlatform(spawnPoints[21], a8));
-            
-                StartCoroutine(spawnPlatform(spawnPoints[22], a8));
-            
-            
-                StartCoroutine(spawnPlatform(spawnPoints[23], a8));
-            
-        }
-    IEnumerator DoCheck()
+    private void platSetUp(Vector3 offset)
     {
-        for (; ; )
+        for (int b = 0; b < 12; b++)
         {
-            // execute block of code here
-            spawn();
-            yield return new WaitForSeconds(intervalTime);
+            for (int i = 0; i < 8; i++)
+            {
+                spCount = 0;
+
+                for (int u = 0; u < 3; u++)
+                {
+                    switch (i)
+                    {
+                        case 0:StartCoroutine(spawnPlatform(spawnPoints[spCount] + offset, positionArray[i])); break;
+                        case 1:StartCoroutine(spawnPlatform(spawnPoints[3 + spCount] + offset, positionArray[i])); break;
+                        case 2:StartCoroutine(spawnPlatform(spawnPoints[6 + spCount] + offset, positionArray[i])); break;
+                        case 3:StartCoroutine(spawnPlatform(spawnPoints[9 + spCount] + offset, positionArray[i])); break;
+                        case 4:StartCoroutine(spawnPlatform(spawnPoints[12 + spCount] + offset, positionArray[i])); break;
+                        case 5:StartCoroutine(spawnPlatform(spawnPoints[15 + spCount] + offset, positionArray[i])); break;
+                        case 6:StartCoroutine(spawnPlatform(spawnPoints[18 + spCount] + offset, positionArray[i])); break;
+                        case 7:StartCoroutine(spawnPlatform(spawnPoints[21 + spCount] + offset, positionArray[i])); break;
+                    }
+                    spCount++;
+                }
+
+            }
+            offset = offset - new Vector3(0, 0, 3.0f);
         }
     }
     private void increaseDiff()//test might just look into speeding game up
