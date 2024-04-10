@@ -9,7 +9,7 @@ public class Controls : MonoBehaviour
     private bool jumping = false, gravS, start;
     private int nextPos,curPos;
     [SerializeField]
-    private float grav,gravCooldown,jumpGrav,startDelay,deathDelayT;
+    private float grav,gravCooldown,jumpGrav,deathDelayT;
     private GameObject me;
     private float setJumpAmount,pHorInput;
     private bool pJumpInput;
@@ -23,9 +23,8 @@ public class Controls : MonoBehaviour
     {
         me = GameObject.Find("Player");
         gravS = false;
-        start = true;
+        start = false;
         curPos = 1;
-        StartCoroutine(startTimer());
         setJumpAmount = jumpAmount;
         soundMe = me.GetComponent<AudioSource>();
     }
@@ -275,16 +274,6 @@ public class Controls : MonoBehaviour
             yield return null;
         }
         gravS = false;
-    }
-    private IEnumerator startTimer()//Start timer
-    {
-        float eTime = 0;
-        while (eTime < startDelay)
-        {
-            eTime += Time.deltaTime;
-            yield return null;
-        }
-        start = false;
     }
     public int getGarVNum()
     {

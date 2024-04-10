@@ -12,12 +12,11 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        counting = false;
         scoreText= GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (counting)
         {
