@@ -11,7 +11,7 @@ public class platformManager : MonoBehaviour
     [SerializeField]
     private float StartSpeed, StartDelay, intervalTime, platTime, difSpeeedIncreaase;
     [SerializeField]
-    private GameObject platform;
+    private GameObject platform,fPlatform;
     private int spCount,spSide;
     private Vector3[] positionArray = { new Vector3(0, 0, 0), new Vector3(0, 0, 45), new Vector3(0, 0, 90), new Vector3(0, 0, 135), new Vector3(0, 0, 180), new Vector3(0, 0, 225), new Vector3(0, 0, 270), new Vector3(0, 0, 315) };
     private Vector3 a1 = new Vector3 (0,0,0), a2 = new Vector3(0, 0, 45), a3 = new Vector3(0, 0, 90), a4 = new Vector3(0, 0, 135), a5 = new Vector3(0, 0, 180), a6 = new Vector3(0, 0, 225), a7 = new Vector3(0, 0, 270), a8 = new Vector3(0, 0, 315);
@@ -39,10 +39,21 @@ public class platformManager : MonoBehaviour
     }
     private IEnumerator spawnPlatform(Vector3 point,Vector3 angle)
     {
-        GameObject plat = Instantiate(platform, point, Quaternion.Euler(angle));
-        plat.GetComponent<platformMove>().setSpeed(StartSpeed);
-        plat.GetComponent<platformMove>().setTime(platTime);
-        yield return null;
+       // if (Rando() != 3)
+       // {
+            GameObject plat = Instantiate(platform, point, Quaternion.Euler(angle));
+            plat.GetComponent<platformMove>().setSpeed(StartSpeed);
+            plat.GetComponent<platformMove>().setTime(platTime);
+            yield return null;
+        /* }
+         else
+         {
+             GameObject fPlat = Instantiate(fPlatform, point, Quaternion.Euler(angle));
+             fPlat.GetComponent<FallingPlat>().setSpeed(StartSpeed);
+             fPlat.GetComponent<FallingPlat>().setTime(platTime);
+             yield return null;
+    }*/
+            
     }
     
     private int Rando()
