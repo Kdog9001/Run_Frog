@@ -164,11 +164,11 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.RiJoWo.RibbitRush
     Standalone: com.DefaultCompany.Run-Frog-Run
-    iPhone: com.DefaultCompany.Run-Frog-Run
+    iPhone: com.RibbitGroup.Ribbit-Rush
   buildNumber:
     Standalone: 0
     VisionOS: 0
-    iPhone: 0
+    iPhone: 1
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
