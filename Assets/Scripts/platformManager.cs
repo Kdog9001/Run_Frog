@@ -125,6 +125,14 @@ public class platformManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
     }
+    public float GetSpeed()
+    {
+        return StartSpeed;
+    }
+    public float GetPTime()
+    {
+        return platTime;
+    }
 
 
     /*

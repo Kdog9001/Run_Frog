@@ -15,7 +15,7 @@ public class Controls : MonoBehaviour
     private bool pJumpInput;
     private AudioSource soundMe;
     [SerializeField]
-    private AudioClip splash, jumpSound,crackSound;
+    private AudioClip splash, jumpSound,crackSound,collectSound;
 
 
 
@@ -77,6 +77,11 @@ public class Controls : MonoBehaviour
     public void CrackSound()
     {
         soundMe.clip = crackSound;
+        soundMe.Play();
+    }
+    public void CollectSound()
+    {
+        soundMe.clip = collectSound;
         soundMe.Play();
     }
     private void FixedUpdate()
