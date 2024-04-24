@@ -5,10 +5,10 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     // Start is called before the first frame update
-    private UserSettings uSettings;
+    private Score uSettings;
     void Start()
     {
-        uSettings=GameObject.Find("Canvas").GetComponent<UserSettings>();
+        uSettings=GameObject.Find("Score").GetComponent<Score>();
     }
 
     // Update is called once per frame

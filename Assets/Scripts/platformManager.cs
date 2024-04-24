@@ -133,6 +133,14 @@ public class platformManager : MonoBehaviour
     {
         return platTime;
     }
+    public Vector3[] getPosArray()
+    {
+        return positionArray;
+    }
+    public Vector3[] getStartArray()
+    {
+        return spawnPoints;
+    }
 
 
     /*

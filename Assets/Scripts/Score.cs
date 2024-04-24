@@ -9,10 +9,13 @@ public class Score : MonoBehaviour
     private float startTime;
     private bool counting;
     private TextMeshProUGUI scoreText;
+    private int CollectCount;
+    private UserSettings uSetings;
     // Start is called before the first frame update
     void Start()
     {
-        scoreText= GetComponent<TextMeshProUGUI>();
+        uSetings = GameObject.Find("Canvas").GetComponent<UserSettings>();
+        scoreText = GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -40,5 +43,14 @@ public class Score : MonoBehaviour
     {
         counting = false;
         startTime = 0;
+    }
+    public void AddCScore()
+    {
+        CollectCount++;
+        uSetings.SetCollectCount(CollectCount);
+    }
+    public void initSetCollectCount(int count)
+    {
+        CollectCount = count;
     }
 }

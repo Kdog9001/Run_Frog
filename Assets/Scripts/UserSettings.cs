@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -15,8 +16,11 @@ public class UserSettings : MonoBehaviour
     [SerializeField] private AudioMixer myMixer;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider gameSlider;
+    [SerializeField] private TextMeshProUGUI CollectableScore;
     [SerializeField] private bool isTitle;
     private float curTimeScale;
+    private int collectCount;
+    [SerializeField] private Score score;
     private void Start()
     {
         if (PlayerPrefs.HasKey("musicVolume"))
@@ -34,6 +38,14 @@ public class UserSettings : MonoBehaviour
         else
         {
             SetGameVol();
+        }
+        if (PlayerPrefs.HasKey("collectCount"))
+        {
+            loadCollectCount();
+        }
+        else
+        {
+            SetCollectCount(0);
         }
     }
 
@@ -87,6 +99,17 @@ public class UserSettings : MonoBehaviour
         gameSlider.value = PlayerPrefs.GetFloat("gameVolume");
         SetGameVol();
     }
+    public void SetCollectCount(int count)
+    {
+        CollectableScore.text = "Fly's: " + count;
+        PlayerPrefs.SetInt("collectCount", count);
+    }
+    private void loadCollectCount()
+    {
+        CollectableScore.text = "Fly's: " + PlayerPrefs.GetInt("collectCount");
+        SetCollectCount(PlayerPrefs.GetInt("collectCount"));
+        score.initSetCollectCount(PlayerPrefs.GetInt("collectCount"));
+    }
 
     public void died()
     {
@@ -101,4 +124,5 @@ public class UserSettings : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    
 }
