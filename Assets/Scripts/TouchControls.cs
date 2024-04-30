@@ -28,8 +28,12 @@ public class TouchControls : MonoBehaviour
     {
         if (playerAlive)
         {
-
-
+            //Jump when two fingers are tapped
+            /*if (Input.touchCount == 2)
+            {
+                player.GetComponent<Controls>().setPJumpInput(true);
+            }*/
+            //Left and Right Movement
             if (Input.touchCount == 1)
             {
                 if (movingLeft)
@@ -42,24 +46,19 @@ public class TouchControls : MonoBehaviour
                     player.GetComponent<Controls>().setPHorInput(1.0f);
                 }
             }
-            if (Input.touchCount == 0)
+            //Stops movement when nothing is being touched
+            else if (Input.touchCount == 0)
             {
                 movingLeft = false;
                 movingRight = false;
                 player.GetComponent<Controls>().setPHorInput(0.0f);
-            }
-
-            if (Input.touchCount == 2)
-            {
-                player.GetComponent<Controls>().setPJumpInput(true);
-            }
-            else
-            {
                 player.GetComponent<Controls>().setPJumpInput(false);
             }
 
+
+            //JUMPS WHEN SWIPING UP
             //Gets first touch position
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            /*if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 startTouchPosition = Input.GetTouch(0).position;
             }
@@ -68,7 +67,7 @@ public class TouchControls : MonoBehaviour
             {
                 endTouchPosition = Input.GetTouch(0).position;
 
-                if (endTouchPosition.y > startTouchPosition.y)
+                if (endTouchPosition.y > startTouchPosition.y + 3)
                 {
                     player.GetComponent<Controls>().setPJumpInput(true);
                 }
@@ -77,6 +76,7 @@ public class TouchControls : MonoBehaviour
                     player.GetComponent<Controls>().setPJumpInput(false);
                 }
             }
+            */
         }
     }
 
@@ -91,6 +91,11 @@ public class TouchControls : MonoBehaviour
         {
             Debug.Log("Touching Right");
             movingRight = true;
+        }
+
+        if (gameObject.tag != "LI" && gameObject.tag != "RI")
+        {
+            player.GetComponent<Controls>().setPJumpInput(true);
         }
     }
     public void Dead()

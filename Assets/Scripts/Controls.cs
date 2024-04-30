@@ -210,6 +210,7 @@ public class Controls : MonoBehaviour
         GameObject.Find("SpawnManager").GetComponent<platformManager>().restart();
         GameObject.Find("LeftInput").GetComponent<TouchControls>().Dead();
         GameObject.Find("RightInput").GetComponent<TouchControls>().Dead();
+        GameObject.Find("DefaultInput").GetComponent<TouchControls>().Dead();
         Destroy(me);
     }
     private void OnCollisionEnter(Collision collision)
