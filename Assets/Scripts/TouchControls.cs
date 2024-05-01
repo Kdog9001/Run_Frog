@@ -16,6 +16,10 @@ public class TouchControls : MonoBehaviour
     private Vector2 endTouchPosition;
     private bool playerAlive;
 
+    public SpriteRenderer buttonSprite;
+    public Sprite clicked;
+    public Sprite unclicked;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +57,7 @@ public class TouchControls : MonoBehaviour
                 movingRight = false;
                 player.GetComponent<Controls>().setPHorInput(0.0f);
                 player.GetComponent<Controls>().setPJumpInput(false);
+                buttonSprite.sprite = unclicked;
             }
 
 
@@ -86,11 +91,13 @@ public class TouchControls : MonoBehaviour
         {
             Debug.Log("Touching Left");
             movingLeft = true;
+            buttonSprite.sprite = clicked;
         }
         if (gameObject.tag == "RI")
         {
             Debug.Log("Touching Right");
             movingRight = true;
+            buttonSprite.sprite = clicked;
         }
 
         if (gameObject.tag != "LI" && gameObject.tag != "RI")
