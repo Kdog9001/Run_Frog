@@ -18,6 +18,7 @@ public class UserSettings : MonoBehaviour
     [SerializeField] private Slider gameSlider;
     [SerializeField] private TextMeshProUGUI CollectableScore;
     [SerializeField] private TextMeshProUGUI HighScoreText;
+    [SerializeField] private TextMeshProUGUI LossScoreText;
     [SerializeField] private bool isTitle;
     private float curTimeScale;
     private int collectCount;
@@ -76,17 +77,48 @@ public class UserSettings : MonoBehaviour
     }
     public void Unpause()//toggle Ui Elements
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        gameObject.transform.GetChild(3).gameObject.SetActive(false);
-        gameObject.transform.GetChild(4).gameObject.SetActive(false);
-        gameObject.transform.GetChild(2).gameObject.SetActive(true);
-        gameObject.transform.GetChild(5).gameObject.SetActive(false);
-        gameObject.transform.GetChild(7).gameObject.SetActive(false);
+        gameObject.transform.GetChild(0).gameObject.SetActive(false); // Background Dim
+        gameObject.transform.GetChild(3).gameObject.SetActive(false); // Music
+        gameObject.transform.GetChild(4).gameObject.SetActive(false); //Gameplay Slider
+        gameObject.transform.GetChild(2).gameObject.SetActive(true); //Settings Button
+        gameObject.transform.GetChild(5).gameObject.SetActive(false); //Settings Paused
+        gameObject.transform.GetChild(7).gameObject.SetActive(false); // High Score
         if (!isTitle)
         {
             gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
         Time.timeScale = curTimeScale;//resume
+    }
+
+    public void winDeathScreen()//toggles the game over screen after Gordon dies
+    {
+        HighScoreText.text = ""+PlayerPrefs.GetFloat("High Score");
+        gameObject.transform.GetChild(7).gameObject.SetActive(true); //high Score
+        gameObject.transform.GetChild(9).gameObject.SetActive(true); //New high Score
+        gameObject.transform.GetChild(1).gameObject.SetActive(true); // Restart
+        gameObject.transform.GetChild(6).gameObject.SetActive(false);//Score
+        gameObject.transform.GetChild(2).gameObject.SetActive(false); //Settings Button
+        gameObject.transform.GetChild(5).gameObject.SetActive(false); //Settings Paused
+
+        /*new high score
+        
+        
+         get rid of settings button,
+         
+         */
+    }
+
+    public void loseDeathScreen()
+    {
+        //if not beat high score display score and high score
+        SetLossScore();
+        gameObject.transform.GetChild(7).gameObject.SetActive(true); //high Score
+        gameObject.transform.GetChild(8).gameObject.SetActive(true); //Loss Score
+        gameObject.transform.GetChild(1).gameObject.SetActive(true); // Restart
+        gameObject.transform.GetChild(6).gameObject.SetActive(false);//Score
+        gameObject.transform.GetChild(2).gameObject.SetActive(false); //Settings Button
+        gameObject.transform.GetChild(5).gameObject.SetActive(false); //Settings Paused
+
     }
     public void SetMusicVol()
     {
@@ -138,6 +170,11 @@ public class UserSettings : MonoBehaviour
         return PlayerPrefs.GetFloat("High Score");   
     }
 
+    public void SetLossScore()
+    {
+        LossScoreText.text = "Your Score: " + score.getScore();
+    }
+
 
     public void died()
     {
@@ -152,5 +189,12 @@ public class UserSettings : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    
+
+    private void Update()
+    {
+        if(Input.GetKey("p"))
+        {
+            PlayerPrefs.SetFloat("High Score", 0);
+        }
+    }
 }

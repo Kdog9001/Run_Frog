@@ -61,6 +61,16 @@ public class Score : MonoBehaviour
         if (temp > uSetings.GetHighScore())
         {
             uSetings.SetHighScore(temp);
+            uSetings.winDeathScreen();
         }
+        else
+        {
+            uSetings.loseDeathScreen();
+        }
+    }
+
+    public float getScore()
+    {
+        return temp;
     }
 }

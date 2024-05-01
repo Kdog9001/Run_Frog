@@ -199,13 +199,17 @@ public class Controls : MonoBehaviour
             //death
             soundDeath();
             GameObject.Find("Score").GetComponent<Score>().StopScore();
-            Invoke("deathDelay", deathDelayT);
+
+            //Invoke("deathDelay", deathDelayT);
+            Time.timeScale = 0.0f;
         }
 
     }
     private void deathDelay()
     {
+        
         GameObject.Find("Canvas").GetComponent<UserSettings>().died();
+        
         GameObject.Find("Main Camera").GetComponent<CameraController>().updatePlayerState();
         GameObject.Find("SpawnManager").GetComponent<platformManager>().restart();
         GameObject.Find("LeftInput").GetComponent<TouchControls>().Dead();
