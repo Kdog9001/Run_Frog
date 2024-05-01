@@ -667,6 +667,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 668610675392154846, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 668610675392154846, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 668610675392154846, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.49056602
+      objectReference: {fileID: 0}
     - target: {fileID: 705995789762045187, guid: 426e716e61b583a42b6eff0df2278724,
         type: 3}
       propertyPath: m_Name
@@ -687,10 +702,25 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetGameVol
       objectReference: {fileID: 0}
+    - target: {fileID: 2444499060386055272, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566381248385290123, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 115.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3566381248385290123, guid: 426e716e61b583a42b6eff0df2278724,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 99
+      value: 256.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566381248385290123, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 543
       objectReference: {fileID: 0}
     - target: {fileID: 4035347293329172234, guid: 426e716e61b583a42b6eff0df2278724,
         type: 3}
@@ -702,6 +732,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5194876411903657164, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194876411903657164, guid: 426e716e61b583a42b6eff0df2278724,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c0ea8a296b0e771428f7e4900fa32ba4,
+        type: 3}
     - target: {fileID: 5405781406111762969, guid: 426e716e61b583a42b6eff0df2278724,
         type: 3}
       propertyPath: score
