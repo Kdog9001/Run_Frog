@@ -11,6 +11,7 @@ public class Score : MonoBehaviour
     private TextMeshProUGUI scoreText;
     private int CollectCount;
     private UserSettings uSetings;
+    private float temp;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,7 @@ public class Score : MonoBehaviour
     }
     private void Scoring()
     {
-        float temp = startTime*2.0f;
+        temp = startTime*2.0f;
         temp = Mathf.Round(temp);
         scoreText.text= "Score: "+temp.ToString();
     }
@@ -43,6 +44,7 @@ public class Score : MonoBehaviour
     {
         counting = false;
         startTime = 0;
+        checkHighScore();
     }
     public void AddCScore()
     {
@@ -52,5 +54,13 @@ public class Score : MonoBehaviour
     public void initSetCollectCount(int count)
     {
         CollectCount = count;
+    }
+
+    public void checkHighScore()
+    {
+        if (temp > uSetings.GetHighScore())
+        {
+            uSetings.SetHighScore(temp);
+        }
     }
 }

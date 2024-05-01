@@ -17,6 +17,7 @@ public class UserSettings : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider gameSlider;
     [SerializeField] private TextMeshProUGUI CollectableScore;
+    [SerializeField] private TextMeshProUGUI HighScoreText;
     [SerializeField] private bool isTitle;
     private float curTimeScale;
     private int collectCount;
@@ -47,6 +48,14 @@ public class UserSettings : MonoBehaviour
         {
             SetCollectCount(0);
         }
+        if (PlayerPrefs.HasKey("High Score"))
+        {
+            loadHighScore();
+        }
+        else
+        {
+            SetHighScore(0);
+        }
     }
 
     public void Pause1()//toggle Ui Elements
@@ -56,6 +65,7 @@ public class UserSettings : MonoBehaviour
         gameObject.transform.GetChild(4).gameObject.SetActive(true);
         gameObject.transform.GetChild(5).gameObject.SetActive(true);
         gameObject.transform.GetChild(2).gameObject.SetActive(false);
+        gameObject.transform.GetChild(7).gameObject.SetActive(true);
         if (!isTitle)
         {
             gameObject.transform.GetChild(1).gameObject.SetActive(true);
@@ -71,6 +81,7 @@ public class UserSettings : MonoBehaviour
         gameObject.transform.GetChild(4).gameObject.SetActive(false);
         gameObject.transform.GetChild(2).gameObject.SetActive(true);
         gameObject.transform.GetChild(5).gameObject.SetActive(false);
+        gameObject.transform.GetChild(7).gameObject.SetActive(false);
         if (!isTitle)
         {
             gameObject.transform.GetChild(1).gameObject.SetActive(false);
@@ -101,15 +112,32 @@ public class UserSettings : MonoBehaviour
     }
     public void SetCollectCount(int count)
     {
-        CollectableScore.text = "Fly's: " + count;
+        CollectableScore.text = "Flies: " + count;
         PlayerPrefs.SetInt("collectCount", count);
     }
     private void loadCollectCount()
     {
-        CollectableScore.text = "Fly's: " + PlayerPrefs.GetInt("collectCount");
+        CollectableScore.text = "Flies: " + PlayerPrefs.GetInt("collectCount");
         SetCollectCount(PlayerPrefs.GetInt("collectCount"));
         score.initSetCollectCount(PlayerPrefs.GetInt("collectCount"));
     }
+    public void SetHighScore(float count)
+    {
+        HighScoreText.text = "High Score: " + count;
+        PlayerPrefs.SetFloat("High Score", count);
+    }
+    private void loadHighScore()
+    {
+        HighScoreText.text = "High Score: " + PlayerPrefs.GetFloat("High Score");
+        SetHighScore(PlayerPrefs.GetFloat("High Score"));
+        
+    }
+
+    public float GetHighScore()
+    {
+        return PlayerPrefs.GetFloat("High Score");   
+    }
+
 
     public void died()
     {
